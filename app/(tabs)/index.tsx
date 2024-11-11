@@ -6,7 +6,7 @@ export default function HomeScreen() {
   const [quantidade, setQuantidade] = React.useState("0"); 
   const [listaDeEstoque, setListaDeEstoque] = React.useState([]); 
   const [itemSelecionado, setItemSelecionado] = React.useState(null); 
-  const [idCount, setIdCount] = React.useState(null); 
+  const [idCount, setIdCount] = React.useState(0); 
   const cadastrar = () => {
     let count = idCount
     const obj = {
@@ -27,6 +27,9 @@ export default function HomeScreen() {
   const excluir = () => {
     const novaLista= listaDeEstoque.filter((item)=> item.id !== itemSelecionado.id)
     setListaDeEstoque(novaLista)
+    setProduto("")
+    setQuantidade("")
+    setItemSelecionado(null)
   }
 
   const editar = () => {
@@ -83,14 +86,16 @@ export default function HomeScreen() {
         </Pressable>
        </View>
        <View style={styles.buttonview}>
-         <Pressable style={styles.buttonstyleeditar} onPress={editar}>
+         <Pressable style={[styles.buttonstyleeditar, itemSelecionado === null && styles.botaodesabilitado]} 
+         onPress={editar} disabled={itemSelecionado === null}>
           <Text style={styles.buttontextstyle}> Editar </Text>
          </Pressable>
        </View>
       </View>
 
       <View>
-      <Pressable style={styles.buttonstyleexcluir}  onPress={excluir}>
+      <Pressable style={[styles.buttonstyleexcluir, itemSelecionado === null && styles.botaodesabilitado]}  
+      onPress={excluir} disabled={itemSelecionado === null}>
           <Text style={styles.buttontextstyle}> Excluir </Text>
       </Pressable>
       </View>
@@ -203,5 +208,8 @@ itemselecionado: {
   borderBottomColor: "#ccc",
   paddingVertical: 12,
   backgroundColor: "#ccc",
+},
+botaodesabilitado: {
+  backgroundColor: "gray",
 }
 });
