@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, TextInput, Pressable, FlatList} from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, TextInput, Pressable, FlatList, Alert} from 'react-native';
 
 export default function HomeScreen() {
   const [produto, setProduto] = React.useState("");
@@ -10,6 +10,11 @@ export default function HomeScreen() {
       produto: produto,
       quantidade: quantidade,
       id: listaDeEstoque.length.toString()
+    }
+    
+    if (produto === "" || quantidade === "") {
+      Alert.alert("Precisa inserir produto e quantidade!")
+      return
     }
     setListaDeEstoque([...listaDeEstoque,obj]) 
   }
