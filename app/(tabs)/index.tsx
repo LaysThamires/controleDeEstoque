@@ -23,16 +23,17 @@ export default function HomeScreen() {
         />
       </View>
 
-      <View>
-      <Pressable style={styles.buttonstylecadastrar}>
+      <View style={styles.containerbuttons}>
+       <View style={styles.buttonview}>
+        <Pressable style={styles.buttonstylecadastrar}>
           <Text style={styles.buttontextstyle}> Cadastrar </Text>
-      </Pressable>
-      </View>
-
-      <View>
-      <Pressable style={styles.buttonstyleeditar}>
+        </Pressable>
+       </View>
+       <View style={styles.buttonview}>
+         <Pressable style={styles.buttonstyleeditar}>
           <Text style={styles.buttontextstyle}> Editar </Text>
-      </Pressable>
+         </Pressable>
+       </View>
       </View>
 
       <View>
@@ -57,7 +58,7 @@ textstyle: {
 },
 buttonstylecadastrar: {
   backgroundColor: 'green',
-  margin: 12,
+  marginHorizontal: 12,
   paddingVertical: 12,
   alignItems: 'center',
   justifyContent: 'center',
@@ -69,13 +70,12 @@ buttontextstyle: {
 },
 buttonstyleeditar: {
   backgroundColor: 'blue',
-  margin: 12,
+  marginHorizontal: 12,
   paddingVertical: 12,
   alignItems: 'center',
   justifyContent: 'center',
   borderRadius: 6,
   elevation: 3,
-  marginTop: 0,
 },
 buttonstyleexcluir: {
   backgroundColor: 'red',
@@ -85,6 +85,15 @@ buttonstyleexcluir: {
   justifyContent: 'center',
   borderRadius: 6,
   elevation: 3,
-  marginTop: 0,
 },
+containerbuttons: {
+  display: "flex",
+  flexDirection: "row", 
+  flexWrap: "wrap",
+  alignItems: "center",
+  justifyContent: "center",
+},
+buttonview: {
+  flex: 1,
+}
 });
