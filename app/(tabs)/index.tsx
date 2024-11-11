@@ -5,13 +5,14 @@ export default function HomeScreen() {
   const [produto, setProduto] = React.useState("");
   const [quantidade, setQuantidade] = React.useState("0"); 
   const [listaDeEstoque, setListaDeEstoque] = React.useState([]); 
+  const [itemSelecionado, setItemSelecionado] = React.useState(null); 
   const cadastrar = () => {
     const obj = {
       produto: produto,
       quantidade: quantidade,
       id: listaDeEstoque.length.toString()
     }
-    
+
     if (produto === "" || quantidade === "") {
       Alert.alert("Precisa inserir produto e quantidade!")
       return
@@ -19,15 +20,25 @@ export default function HomeScreen() {
     setListaDeEstoque([...listaDeEstoque,obj]) 
   }
 
+  const excluir = () => {
+    const novaLista= listaDeEstoque.filter((item)=> item.id !== itemSelecionado.id)
+    setListaDeEstoque(novaLista)
+  }
+
+  const pegaItemSelecionado = (selecionado: any) => {
+    const itemSelect= listaDeEstoque.find((item)=> item.id === selecionado.id)
+    setItemSelecionado(itemSelect)
+  }
+
   const itemDaLista = ({item}: any) => (
-    <View  style={styles.linhalista}>
+    <Pressable  style={styles.linhalista} onPress={() => pegaItemSelecionado(item)}>
       <Text  style={styles.linhacelula}>
         {item.produto}
       </Text>
       <Text  style={styles.linhacelula}>
         {item.quantidade}
       </Text>
-    </View>
+    </Pressable>
   )
 
   return (
@@ -65,7 +76,7 @@ export default function HomeScreen() {
       </View>
 
       <View>
-      <Pressable style={styles.buttonstyleexcluir}>
+      <Pressable style={styles.buttonstyleexcluir}  onPress={excluir}>
           <Text style={styles.buttontextstyle}> Excluir </Text>
       </Pressable>
       </View>
