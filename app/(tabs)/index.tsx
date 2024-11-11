@@ -1,7 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Text, SafeAreaView, TextInput, Pressable, FlatList, Alert} from 'react-native';
-
-export default function HomeScreen() {
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+const Stack = createNativeStackNavigator();
+  
+const HomeScreen = ({ navigation }: any) => {
   const [produto, setProduto] = React.useState("");
   const [quantidade, setQuantidade] = React.useState("0"); 
   const [listaDeEstoque, setListaDeEstoque] = React.useState([]); 
@@ -117,6 +120,19 @@ export default function HomeScreen() {
         />
       </View>
     </SafeAreaView>
+  );
+}
+export default function App() {
+  return (
+    <NavigationContainer independent={true}>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen 
+          name="Home" 
+          component={HomeScreen} 
+          options={{ title: 'Controle De Estoque' }} // Definindo o título da página
+          />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
