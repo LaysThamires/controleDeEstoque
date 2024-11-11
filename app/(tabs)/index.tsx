@@ -1,16 +1,38 @@
 import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, TextInput, Pressable } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, TextInput, Pressable, FlatList} from 'react-native';
 
 export default function HomeScreen() {
-  const [produto, setProduto] = React.useState(null);
-  const [quantidade, setQuantidade] = React.useState(0);  
+  const [produto, setProduto] = React.useState("");
+  const [quantidade, setQuantidade] = React.useState("0"); 
+  const [listaDeEstoque, setListaDeEstoque] = React.useState([]); 
+  const cadastrar = () => {
+    const obj = {
+      produto: produto,
+      quantidade: quantidade,
+      id: listaDeEstoque.length.toString()
+    }
+    setListaDeEstoque([...listaDeEstoque,obj]) 
+  }
+
+  const itemDaLista = ({item}: any) => (
+    <View  style={styles.linhalista}>
+      <Text  style={styles.linhacelula}>
+        {item.produto}
+      </Text>
+      <Text  style={styles.linhacelula}>
+        {item.quantidade}
+      </Text>
+    </View>
+  )
+
   return (
-    <SafeAreaView>
+    <SafeAreaView  style={styles.safeareastyle}>
       <View style={styles.viewinput}>
         <Text style={styles.textstyle}> Produto </Text>
         <TextInput
           style={styles.meutextinput}
           value={produto}
+          onChangeText={prod => setProduto(prod)}
         />
       </View>
       
@@ -18,14 +40,15 @@ export default function HomeScreen() {
         <Text style={styles.textstyle}> Quantidade </Text>
         <TextInput
           style={styles.meutextinput}
-          value={quantidade.toString()}
+          value={quantidade}
           keyboardType="numeric"
+          onChangeText={quant => setQuantidade(quant)}
         />
       </View>
 
       <View style={styles.containerbuttons}>
        <View style={styles.buttonview}>
-        <Pressable style={styles.buttonstylecadastrar}>
+        <Pressable style={styles.buttonstylecadastrar} onPress={cadastrar}>
           <Text style={styles.buttontextstyle}> Cadastrar </Text>
         </Pressable>
        </View>
@@ -40,6 +63,23 @@ export default function HomeScreen() {
       <Pressable style={styles.buttonstyleexcluir}>
           <Text style={styles.buttontextstyle}> Excluir </Text>
       </Pressable>
+      </View>
+
+      <View style={styles.containerlista}>
+        <View style={styles.headerlista}>
+          <Text style={styles.headerlistatext}>
+            Produto
+          </Text>
+          <Text style={styles.headerlistatext}>
+            Quantidade
+          </Text>
+        </View>
+
+        <FlatList
+        data={listaDeEstoque}
+        renderItem={itemDaLista}
+        keyExtractor={(item) => item.id}
+        />
       </View>
     </SafeAreaView>
   );
@@ -56,6 +96,11 @@ viewinput: {
 textstyle: {
   fontSize: 18,
 },
+safeareastyle: {
+  flex: 1,
+  paddingHorizontal: 12,
+},
+
 buttonstylecadastrar: {
   backgroundColor: 'green',
   marginHorizontal: 12,
@@ -95,5 +140,31 @@ containerbuttons: {
 },
 buttonview: {
   flex: 1,
+},
+containerlista: {
+  flex: 1,
+  margin: 12,
+},
+headerlista: {
+  backgroundColor: "green",
+  height: 40,
+  flexDirection: "row",
+},
+headerlistatext: {
+  flex: 1,
+  color: "white",
+  fontWeight: "bold",
+  textAlign: "center",
+  paddingVertical: 12,
+},
+linhalista: {
+  flexDirection: "row",
+  borderBottomWidth: 1,
+  borderBottomColor: "#ccc",
+  paddingVertical: 12,
+},
+linhacelula: {
+  flex: 1,
+  textAlign: "center",
 }
 });
