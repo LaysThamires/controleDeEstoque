@@ -6,11 +6,13 @@ export default function HomeScreen() {
   const [quantidade, setQuantidade] = React.useState("0"); 
   const [listaDeEstoque, setListaDeEstoque] = React.useState([]); 
   const [itemSelecionado, setItemSelecionado] = React.useState(null); 
+  const [idCount, setIdCount] = React.useState(null); 
   const cadastrar = () => {
+    let count = idCount
     const obj = {
       produto: produto,
       quantidade: quantidade,
-      id: listaDeEstoque.length.toString()
+      id: idCount.toString()
     }
 
     if (produto === "" || quantidade === "") {
@@ -18,6 +20,8 @@ export default function HomeScreen() {
       return
     }
     setListaDeEstoque([...listaDeEstoque,obj]) 
+    count = count+1
+    setIdCount(count)
   }
 
   const excluir = () => {
@@ -25,13 +29,23 @@ export default function HomeScreen() {
     setListaDeEstoque(novaLista)
   }
 
+  const editar = () => {
+    const novaLista= listaDeEstoque.map((item)=>
+      item.id === itemSelecionado.id ? {...item, quantidade:quantidade, produto: produto} : item
+    )
+    setListaDeEstoque(novaLista)
+  }
+
   const pegaItemSelecionado = (selecionado: any) => {
     const itemSelect= listaDeEstoque.find((item)=> item.id === selecionado.id)
     setItemSelecionado(itemSelect)
+    setProduto(itemSelect.produto)
+    setQuantidade(itemSelect.quantidade)
   }
 
   const itemDaLista = ({item}: any) => (
-    <Pressable  style={styles.linhalista} onPress={() => pegaItemSelecionado(item)}>
+    <Pressable  style={[item.id === itemSelecionado?.id ? styles.itemselecionado : styles.linhalista]}
+     onPress={() => pegaItemSelecionado(item)}>
       <Text  style={styles.linhacelula}>
         {item.produto}
       </Text>
@@ -69,7 +83,7 @@ export default function HomeScreen() {
         </Pressable>
        </View>
        <View style={styles.buttonview}>
-         <Pressable style={styles.buttonstyleeditar}>
+         <Pressable style={styles.buttonstyleeditar} onPress={editar}>
           <Text style={styles.buttontextstyle}> Editar </Text>
          </Pressable>
        </View>
@@ -182,5 +196,12 @@ linhalista: {
 linhacelula: {
   flex: 1,
   textAlign: "center",
+},
+itemselecionado: {
+  flexDirection: "row",
+  borderBottomWidth: 1,
+  borderBottomColor: "#ccc",
+  paddingVertical: 12,
+  backgroundColor: "#ccc",
 }
 });
