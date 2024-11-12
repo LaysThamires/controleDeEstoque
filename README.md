@@ -16,6 +16,6 @@
    ```bash
     npx expo start
    ```
-   ![Imagem do App](imagens/Tela1.jpg)
-   ![Imagem do App](imagens/Tela2.jpg)
-   ![Imagem do App](imagens/Tela3.jpg)
+   ![Imagem do App](app/imagens/Tela1.jpg)
+   ![Imagem do App](app/imagens/Tela2.jpg)
+   ![Imagem do App](app/imagens/Tela3.jpg)
